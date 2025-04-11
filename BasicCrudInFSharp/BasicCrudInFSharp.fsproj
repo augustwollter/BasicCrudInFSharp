@@ -7,6 +7,7 @@
   <ItemGroup>
     <Compile Include="Models\Person.fs" />
     <Compile Include="Data\DataSource.fs" />
+	<Compile Include="Controllers\PeopleController.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
