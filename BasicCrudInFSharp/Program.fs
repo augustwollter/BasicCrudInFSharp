@@ -9,10 +9,28 @@ open BasicCrudInFSharp.Models
 [<EntryPoint>]
 let main args =
     let builder = WebApplication.CreateBuilder(args)
+
+    let modelBuilder = new ODataConventionModelBuilder()
+    modelBuilder.EntitySet<Person>("People") |> ignore
+
+    let model = modelBuilder.GetEdmModel()
+    
+    builder.Services.AddControllers().AddOData(fun options ->
+        options.EnableQueryFeatures().AddRouteComponents(model) |> ignore
+    ) |> ignore
+
     let app = builder.Build()
 
-    app.MapGet("/", Func<string>(fun () -> "Hello World!")) |> ignore
+    app
+        .UseODataRouteDebug()
+        .UseRouting()
+        .UseEndpoints(fun endpoints ->
+            endpoints.MapControllers() |> ignore
+        ) |> ignore
 
     app.Run()
+
+    
+
 
     0 // Exit code
