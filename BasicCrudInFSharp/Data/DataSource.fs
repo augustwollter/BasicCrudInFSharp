@@ -1,6 +1,15 @@
-namespace BasicCrudInFSharp.Models
+namespace BasicCrudInFSharp.Data
 
-type Person() = 
-    member val Id = 0 with get, set
-    member val Name = "" with get, set
-    member val Age = 0 with get, set
+open BasicCrudInFSharp.Models
+
+module DataSource =
+    let private GetPeople() =
+        let people = ResizeArray<Person>()
+
+        people.Add(new Person(Id = 1, Name = "Sue", Age = 19))
+        people.Add(new Person(Id = 2, Name = "Joe", Age = 17))
+        people.Add(new Person(Id = 3, Name = "Luc", Age = 23))
+
+        people
+
+    let People = GetPeople()
